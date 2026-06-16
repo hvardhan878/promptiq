@@ -186,9 +186,22 @@ def _run_suggest(reports: list[SessionReport]) -> None:
     console.print()
     console.print(f"[dim]suggestions written to[/dim] [white]{out}[/white]")
     console.print()
-    try:
-        subprocess.Popen(["claude", str(out)])
-        console.print("[dim]opened in Claude Code[/dim]")
-    except FileNotFoundError:
-        console.print(f"[dim]open in Claude Code:[/dim] [white]claude {out}[/white]")
+
+    # Resolve full path to claude binary so subprocess finds it even when
+    # /opt/homebrew/bin (or similar) isn't on the subprocess PATH.
+    import shutil
+    claude_bin = shutil.which("claude")
+    opened = False
+    if claude_bin:
+        try:
+            subprocess.Popen([claude_bin, str(out)])
+            console.print("[dim]opened in Claude Code[/dim]")
+            opened = True
+        except OSError:
+            pass
+
+    if not opened:
+        # Print without Rich markup so the path is never word-wrapped mid-token
+        print(f"  open in Claude Code:  claude {out}")
+
     console.print()

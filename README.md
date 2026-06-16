@@ -41,7 +41,7 @@ Every Claude Code session has a cost (dollars spent on tokens) and a value (line
 
 **Why promptiq exists:** Vague prompts cost real money — the AI spends turns reading files you could have named, rewriting code you could have spec'd. promptiq shows you exactly where your tokens went and what to say instead.
 
-![terminal output demo](https://placehold.co/640x320/0c0c0c/888?text=promptiq+demo+GIF)
+![terminal output demo](docs/demo.gif)
 
 ---
 
